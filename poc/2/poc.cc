@@ -144,7 +144,10 @@ int main(int argc, TCHAR* argv[])
 	LogMessage(L_INFO, TEXT("NtDCompositionSetResourceBufferProperty(0x%x, 0x%x, 0x%x, buf, 0x%x)"), hChannel,
 		hResource, 1, sizeof(szBuff));
 	ntStatus = NtDCompositionProcessChannelBatchBuffer(hChannel, 0x10 + sizeof(szBuff), &dwArg1, &dwArg2);
-
+	if (!NT_SUCCESS(ntStatus)) {
+		LogMessage(L_ERROR, TEXT("Set Resource Buffer Property error code:0x%08x"), ntStatus);
+		exit(-1);
+	}
 	//
 	// release resource
 	//
